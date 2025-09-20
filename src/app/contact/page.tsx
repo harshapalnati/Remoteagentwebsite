@@ -34,7 +34,7 @@ export default function ContactPage() {
   const [submitted, setSubmitted] = React.useState<null | "ok" | "err">(null);
   const [message, setMessage] = React.useState<string>("");
 
-  async function onSubmit(e: React.FormEvent) {
+  async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setSubmitting(true);
     setSubmitted(null);
@@ -50,9 +50,10 @@ export default function ContactPage() {
       setSubmitted("ok");
       setMessage("Thanks — we’ll reach out shortly.");
       setState({ name: "", email: "", phone: "", organization: "", role: ROLES[0] });
-    } catch (err: any) {
+    } catch (err) {
       setSubmitted("err");
-      setMessage(err?.message || "Something went wrong. Please try again.");
+      const msg = err instanceof Error ? err.message : "Something went wrong. Please try again.";
+      setMessage(msg);
     } finally {
       setSubmitting(false);
     }

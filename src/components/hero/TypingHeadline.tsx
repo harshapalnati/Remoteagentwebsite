@@ -18,8 +18,8 @@ export default function TypingHeadline() {
   const [charIndex, setCharIndex] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
 
-  const phrase = useMemo(() => PHRASES[phraseIndex % PHRASES.length], [phraseIndex]);
-  const displayed = phrase.slice(0, charIndex);
+  const phrase = useMemo(() => PHRASES[phraseIndex % PHRASES.length] ?? "", [phraseIndex]);
+  const displayed = (phrase || "").slice(0, charIndex);
 
   useEffect(() => {
     let timeoutId: number | undefined;

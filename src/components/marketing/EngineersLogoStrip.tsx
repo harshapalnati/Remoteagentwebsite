@@ -2,6 +2,11 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import Image, { StaticImageData } from "next/image";
+import meta from "@/components/images/meta.png";
+import mit from "@/components/images/mit_logo_std_rgb_white.png";
+import amazon from "@/components/images/amazon-logo-white-removebg-preview.png";
+import microsoft from "@/components/images/microsoft-logo-black-and-white.png";
+import salesforce from "@/components/images/salesforce.png";
 
 // Whiteify filter applied to: Meta, Microsoft (dark assets). Add others as needed.
 
@@ -21,11 +26,11 @@ type Props = {
 export default function EngineersLogoStrip({
   title = "Engineered by a world-class team",
   logos = [
-    { name: "Meta", src: require("@/components/images/meta.png").default ?? require("@/components/images/meta.png") },
-    { name: "MIT", src: require("@/components/images/mit_logo_std_rgb_white.png").default ?? require("@/components/images/mit_logo_std_rgb_white.png") },
-    { name: "Amazon", src: require("@/components/images/amazon-logo-white-removebg-preview.png").default ?? require("@/components/images/amazon-logo-white-removebg-preview.png") },
-    { name: "Microsoft", src: require("@/components/images/microsoft-logo-black-and-white.png").default ?? require("@/components/images/microsoft-logo-black-and-white.png") },
-    { name: "Salesforce", src: require("@/components/images/salesforce.png").default ?? require("@/components/images/salesforce.png") },
+    { name: "Meta", src: meta },
+    { name: "MIT", src: mit },
+    { name: "Amazon", src: amazon },
+    { name: "Microsoft", src: microsoft },
+    { name: "Salesforce", src: salesforce },
   ],
   className = "",
 }: Props) {

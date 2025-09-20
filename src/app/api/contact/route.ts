@@ -2,7 +2,13 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
   try {
-    const body = await req.json();
+    const body: {
+      name?: string;
+      email?: string;
+      phone?: string;
+      organization?: string;
+      role?: string;
+    } = await req.json();
     const { name, email, phone, organization, role } = body || {};
     if (!name || !email) {
       return NextResponse.json({ error: "Name and email are required" }, { status: 400 });
@@ -13,8 +19,9 @@ export async function POST(req: NextRequest) {
     console.log("Contact request", { name, email, phone, organization, role });
 
     return NextResponse.json({ ok: true });
-  } catch (e: any) {
-    return NextResponse.json({ error: e?.message || "Invalid request" }, { status: 400 });
+  } catch (e) {
+    const message = e instanceof Error ? e.message : "Invalid request";
+    return NextResponse.json({ error: message }, { status: 400 });
   }
 }
 

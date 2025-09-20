@@ -6,7 +6,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 if (typeof window !== "undefined") {
-  const g: any = (gsap as any).core?.globals?.() || {};
+  const g = (gsap as unknown as { core?: { globals?: () => Record<string, unknown> } }).core?.globals?.() || {};
   if (!g["ScrollTrigger"]) gsap.registerPlugin(ScrollTrigger);
 }
 
@@ -68,9 +68,11 @@ export default function HowItsWorkspinned() {
         const wrapTop = wrapEl.getBoundingClientRect().top + window.scrollY;
         const rects = cards.map((c) => c.getBoundingClientRect());
         const tops = rects.map((r) => r.top + window.scrollY - wrapTop);
-        const lastBottom = rects[rects.length - 1].bottom + window.scrollY - wrapTop;
-        gsap.set(railEl, { height: Math.max(1, Math.round(lastBottom - tops[0])) });
-        return { tops, firstTop: tops[0] };
+        const lastRect = rects[rects.length - 1]!;
+        const lastBottom = (lastRect?.bottom ?? 0) + window.scrollY - wrapTop;
+        const firstTop = tops[0] ?? 0;
+        gsap.set(railEl, { height: Math.max(1, Math.round(lastBottom - firstTop)) });
+        return { tops, firstTop };
       };
 
       dimAll();
@@ -136,8 +138,13 @@ export default function HowItsWorkspinned() {
       });
 
       requestAnimationFrame(() => ScrollTrigger.refresh());
-      // @ts-ignore
-      document?.fonts?.ready && (document.fonts as any).ready.then(() => ScrollTrigger.refresh());
+      // Wait for fonts to be ready before refreshing measurements
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-expect-error - document.fonts may not be typed across environments
+      if (document?.fonts?.ready) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        (document.fonts as any).ready.then(() => ScrollTrigger.refresh());
+      }
 
       return () => mm.revert();
     }, rootRef);
