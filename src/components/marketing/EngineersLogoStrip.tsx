@@ -67,7 +67,7 @@ export default function EngineersLogoStrip({
   return (
     <section className={(className ? className + " " : "") + "w-full text-white ra-section"}>
       <div className="ra-container">
-        <h2 className="text-center font-mono text-2xl md:text-3xl font-semibold">
+        <h2 className="text-center font-mono text-2xl md:text-3xl font-semibold capitalize">
           {title}
         </h2>
 

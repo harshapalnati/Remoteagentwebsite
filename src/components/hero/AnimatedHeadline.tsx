@@ -3,11 +3,11 @@ import { useEffect, useMemo, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const WORDS = [
-  "BROWSER AGENT",
-  "COMPUTER USE AGENT",
-  "DEEP RESEARCH AGENT",
-  "INTEGRATION AGENT",
-  "CODING AGENT",
+  "BROWSER AGENTS",
+  "COMPUTER USE AGENTS",
+  "DEEP RESEARCH AGENTS",
+  "INTEGRATION AGENTS",
+  "CODING AGENTS",
 ];
 
 export default function AnimatedHeadline() {
@@ -19,32 +19,34 @@ export default function AnimatedHeadline() {
     return () => clearInterval(t);
   }, []);
 
-  return (
-    <div className="w-full text-center">
-      {/* Line 1 */}
-      <div className="font-mono uppercase tracking-tight text-4xl sm:text-5xl md:text-6xl font-extrabold">
-        BUILD &amp; DEPLOY
-      </div>
+  const reduceMotion =
+    typeof window !== "undefined" &&
+    window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
 
-      {/* Line 2 (flipping boxes with typing cursor) */}
-      <div
-        className="relative mx-auto mt-3 flex items-center justify-center"
-        aria-live="polite"
-      >
-        <div className="relative h-[1.4em] overflow-hidden">
+  return (
+    <div className="relative z-30 w-full text-center"> {/* ↑ sits above stray overlays */}
+      <h1 className="font-mono uppercase tracking-tight text-3xl sm:text-5xl md:text-6xl font-extrabold leading-tight">
+        BUILD &amp; DEPLOY
+      </h1>
+
+      <div className="relative mx-auto mt-3 flex items-center justify-center" aria-live="polite">
+        <div
+          className="relative mb-3 sm:mb-4 overflow-hidden"
+          style={{ height: "1.35em" }}  /* lock line height; no clipping */
+        >
           <AnimatePresence mode="popLayout" initial={false}>
             <motion.div
               key={current}
-              initial={{ y: 16, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              exit={{ y: -16, opacity: 0 }}
+              initial={reduceMotion ? false : { y: 22, opacity: 0 }}
+              animate={reduceMotion ? {} : { y: 0, opacity: 1 }}
+              exit={reduceMotion ? {} : { y: -22, opacity: 0 }}
               transition={{ duration: 0.35, ease: "easeOut" }}
-              className="inline-flex gap-2"
+              className="relative z-40 inline-flex gap-2" /* above local ::before bars */
             >
               {(current || "").split(" ").map((token, idx) => (
                 <span
                   key={idx}
-                  className="px-2.5 py-1 rounded-[3px] border border-zinc-600/60 bg-white/5 text-white shadow-[inset_0_1px_0_rgba(255,255,255,.06)]"
+                  className="px-2.5 py-0.5 sm:py-1 bg-white text-black text-2xl sm:text-4xl md:text-5xl font-bold leading-none"
                 >
                   {token}
                 </span>
@@ -52,16 +54,12 @@ export default function AnimatedHeadline() {
             </motion.div>
           </AnimatePresence>
         </div>
-
-        {/* typing cursor */}
-        <span className="ml-2 h-[1.2em] w-[2px] bg-white/80 animate-pulse" />
+        <span className="hidden" />
       </div>
 
-      {/* Line 3 */}
-      <div className="mt-3 font-mono uppercase tracking-tight text-3xl sm:text-4xl md:text-5xl font-extrabold">
+      <div className="mt-4 sm:mt-5 font-mono uppercase tracking-tight text-2xl sm:text-4xl md:text-5xl font-extrabold leading-tight">
         IN&nbsp;HOURS,&nbsp;NOT&nbsp;WEEKS
       </div>
     </div>
   );
 }
-

@@ -93,7 +93,7 @@ export default function SectionWhyRemoteAgentInline() {
                 aria-pressed={isActive}
                 className="relative ra-card text-left p-6 outline-none min-w-[220px] md:min-w-0 shrink-0 md:shrink md:basis-0"
                 animate={{ flex: isActive ? 2 : 1 }}
-                transition={{ type: "spring", stiffness: 420, damping: 36 }}
+                transition={{ type: "spring", stiffness: 520, damping: 28 }}
                 whileHover={{ y: -2 }}
               >
                 {isActive && (

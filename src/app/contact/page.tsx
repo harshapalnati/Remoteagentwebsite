@@ -9,6 +9,7 @@ type FormState = {
   phone: string;
   organization: string;
   role: string;
+  useCase?: string;
 };
 
 const ROLES = [
@@ -49,7 +50,7 @@ export default function ContactPage() {
       if (!res.ok) throw new Error(data?.error || "Request failed");
       setSubmitted("ok");
       setMessage("Thanks — we’ll reach out shortly.");
-      setState({ name: "", email: "", phone: "", organization: "", role: ROLES[0] });
+      setState({ name: "", email: "", phone: "", organization: "", role: ROLES[0], useCase: "" });
     } catch (err) {
       setSubmitted("err");
       const msg = err instanceof Error ? err.message : "Something went wrong. Please try again.";
@@ -100,6 +101,22 @@ export default function ContactPage() {
                 placeholder="you@company.com"
               />
             </div>
+          </div>
+
+          <div>
+            <label htmlFor="useCase" className="block text-sm mb-2" style={{ color: "var(--ra-muted)" }}>
+              Use case you have in mind (optional)
+            </label>
+            <textarea
+              id="useCase"
+              name="useCase"
+              value={state.useCase ?? ""}
+              onChange={(e) => setState((s) => ({ ...s, useCase: e.target.value }))}
+              rows={3}
+              className="w-full rounded-none bg-transparent border px-3 py-2 text-[15px]"
+              style={{ borderColor: "var(--ra-border)", color: "var(--ra-text)" }}
+              placeholder="e.g., Automate weekly competitive research, or a computer-use agent for QA."
+            />
           </div>
 
           <div className="grid md:grid-cols-2 gap-6">

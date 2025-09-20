@@ -1,34 +1,37 @@
 @import "tailwindcss";
 
-/* Theme variables */
+/* -----------------------------
+   Design tokens
+------------------------------ */
 :root {
-  --bg: #0B1220; /* align body with ra bg */
+  /* base */
+  --bg: #0B1220;
   --fg: #F8FAFC;
   --muted: #9AA6B2;
   --border: rgba(255,255,255,0.08);
   --panel: #0F1729;
   --ink: #0B1220;
 
-  /* ---- Core palette ---- */
-  --ra-bg: #0B1220;           /* page background (dark navy) */
-  --ra-card: #0F1729;         /* cards/sections */
-  --ra-surface: #0F1729;      /* alias for clarity */
-  --ra-surface-2: #111B2F;    /* deeper surface */
+  /* RA palette */
+  --ra-bg: #0B1220;
+  --ra-card: #0F1729;
+  --ra-surface: #0F1729;
+  --ra-surface-2: #111B2F;
   --ra-stroke: rgba(255,255,255,0.08);
   --ra-border: rgba(255,255,255,0.08);
 
-  --ra-text: #F8FAFC;         /* primary text */
-  --ra-muted: #9AA6B2;        /* secondary text */
+  --ra-text: #F8FAFC;
+  --ra-muted: #9AA6B2;
 
-  --ra-accent: #78C7FF;       /* LIGHT BLUE */
+  --ra-accent: #78C7FF;
   --ra-accent-strong: #9ED8FF;
 
-  --ra-cta-bg: #FFFFFF;       /* white CTA */
-  --ra-cta-text: #0B1220;     /* dark text */
+  --ra-cta-bg: #FFFFFF;
+  --ra-cta-text: #0B1220;
 }
 
 .dark {
-  --bg: #0a0a0a; /* dark */
+  --bg: #0a0a0a;
   --fg: #f5f5f5;
   --muted: #a3a3a3;
   --border: #1e1e1e;
@@ -36,6 +39,7 @@
   --ink: #ffffff;
 }
 
+/* Tailwind theme bridge */
 @theme inline {
   --color-background: var(--bg);
   --color-foreground: var(--fg);
@@ -45,9 +49,10 @@
   --font-mono: var(--font-jetbrains-mono);
 }
 
-html, body {
-  height: 100%;
-}
+/* -----------------------------
+   Global
+------------------------------ */
+html, body { height: 100%; }
 
 body {
   background: var(--ra-bg);
@@ -55,44 +60,117 @@ body {
   font-family: var(--font-inter), ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Helvetica Neue, Arial, "Apple Color Emoji", "Segoe UI Emoji";
 }
 
-/* Selection & subtle hero polish */
 ::selection { background: color-mix(in oklab, var(--ra-accent) 45%, transparent); }
 
-/* Utility tokens */
-.container-std {
-  max-width: 72rem; /* max-w-6xl */
-}
+/* containers */
+.container-std { max-width: 72rem; }
 @media (min-width: 768px) {
-  .container-std { max-width: 80rem; } /* md:max-w-7xl */
+  .container-std { max-width: 80rem; }
 }
 
-/* Subtle text color */
+/* helpers */
 .text-subtle { color: var(--muted); }
 
+/* -----------------------------
+   Components
+------------------------------ */
 @layer components {
-  .ra-section{ @apply bg-[var(--ra-bg)] py-16 md:py-24; }
-  .ra-container{ @apply mx-auto max-w-6xl px-6 md:px-10; }
-  .ra-headline{ @apply font-mono font-bold leading-tight text-[color:var(--ra-text)] text-4xl md:text-5xl lg:text-6xl tracking-tight; }
-  .ra-subhead{ @apply font-sans text-[color:var(--ra-muted)] text-[15px] leading-7; }
-  .ra-paragraph{ @apply font-sans text-[15px] leading-7 text-[color:var(--ra-muted)]; }
-  .ra-card{ @apply border p-6 rounded-none transition-colors shadow-[0_10px_40px_-20px_rgba(0,0,0,.6)]; border-color: var(--ra-border); background: var(--ra-surface); }
-  .ra-card:hover{ border-color: color-mix(in oklab, var(--ra-accent) 20%, var(--ra-border)); }
-  .ra-card-title{ @apply font-mono text-[15px] tracking-tight; color: var(--ra-text); }
-  .ra-card-blurb{ @apply font-sans text-sm leading-6; color: var(--ra-muted); }
+  .ra-section { @apply py-16 md:py-24; background: var(--ra-bg); }
+  .ra-container { @apply mx-auto max-w-6xl px-6 md:px-10; }
+
+  .ra-headline { 
+    @apply font-mono font-bold leading-tight tracking-tight text-4xl md:text-5xl lg:text-6xl;
+    color: var(--ra-text);
+  }
+
+  .ra-subhead { 
+    @apply font-sans text-[15px] leading-7;
+    color: var(--ra-muted);
+  }
+
+  .ra-paragraph { 
+    @apply font-sans text-[15px] leading-7;
+    color: var(--ra-muted);
+  }
+
+  .ra-card {
+    @apply border p-6 rounded-none transition-colors shadow-[0_10px_40px_-20px_rgba(0,0,0,.6)];
+    border-color: var(--ra-border);
+    background: var(--ra-surface);
+  }
+  .ra-card:hover {
+    border-color: color-mix(in oklab, var(--ra-accent) 20%, var(--ra-border));
+  }
+  .ra-card-title { @apply font-mono text-[15px] tracking-tight; color: var(--ra-text); }
+  .ra-card-blurb { @apply font-sans text-sm leading-6; color: var(--ra-muted); }
 
   /* CTAs */
-  .ra-cta-primary{ @apply inline-flex items-center gap-2 rounded-none px-4 py-2 text-[15px]; background: var(--ra-cta-bg); color: var(--ra-cta-text); border: 1px solid color-mix(in oklab, var(--ra-cta-text) 10%, transparent); }
-  .ra-cta-primary:hover{ filter: brightness(0.96); }
-  .ra-cta-secondary{ @apply inline-flex items-center gap-2 rounded-none px-4 py-2 text-[15px] border; border-color: var(--ra-accent); color: var(--ra-text); }
-  .ra-cta-secondary:hover{ background: color-mix(in oklab, var(--ra-accent) 18%, transparent); }
-  .ra-cta{ @apply inline-flex items-center justify-center rounded-none px-4 py-2; border: 1px solid var(--ra-accent); color: var(--ra-text); background: transparent; }
-  .ra-cta:hover{ background: color-mix(in oklab, var(--ra-accent) 18%, transparent); }
+  .ra-cta-primary {
+    @apply inline-flex items-center gap-2 rounded-none px-4 py-2 text-[15px];
+    background: var(--ra-cta-bg);
+    color: var(--ra-cta-text);
+    border: 1px solid color-mix(in oklab, var(--ra-cta-text) 10%, transparent);
+  }
+  .ra-cta-primary:hover { filter: brightness(0.96); }
 
-  .ra-link{ color: var(--ra-accent); }
-  .ra-link:hover{ color: var(--ra-accent-strong); }
+  .ra-cta-secondary {
+    @apply inline-flex items-center gap-2 rounded-none px-4 py-2 text-[15px] border;
+    border-color: var(--ra-accent);
+    color: var(--ra-text);
+  }
+  .ra-cta-secondary:hover { background: color-mix(in oklab, var(--ra-accent) 18%, transparent); }
+
+  .ra-cta {
+    @apply inline-flex items-center justify-center rounded-none px-4 py-2;
+    border: 1px solid var(--ra-accent);
+    color: var(--ra-text);
+    background: transparent;
+  }
+  .ra-cta:hover { background: color-mix(in oklab, var(--ra-accent) 18%, transparent); }
+
+  .ra-link { color: var(--ra-accent); }
+  .ra-link:hover { color: var(--ra-accent-strong); }
 }
 
-/* Mono mode (preview black/white variant) */
+/* -----------------------------
+   Hero: scoped overlay fix
+------------------------------ */
+
+/* If your template adds stripes via .hero-stripes, disable them */
+.hero-stripes,
+.hero-stripes::before,
+.hero-stripes::after { display: none !important; content: none !important; }
+
+/* Ensure hero containers don't clip children */
+.ra-container,
+.ra-section { overflow: visible !important; }
+
+/* Strict, scoped kill-switch for the hero area */
+#hero { position: relative; z-index: 0; isolation: isolate; }
+#hero, #hero * { overflow: visible !important; }
+
+/* Nuke any decorative pseudo-elements inside the hero only */
+#hero::before,
+#hero::after,
+#hero *::before,
+#hero *::after {
+  content: none !important;
+  display: none !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  height: 0 !important;
+  pointer-events: none !important;
+  mix-blend-mode: normal !important;
+}
+
+/* Particles behind; rotating tokens above */
+#hero .particles { position: absolute; inset: 0; z-index: -1; pointer-events: none; }
+#hero .tokens { position: relative; z-index: 40; }
+
+/* -----------------------------
+   Mono preview variant
+------------------------------ */
 .ra-mono body, .ra-mono {
   --ra-bg: #0B0B0B;
   --ra-surface: #0E0E0F;
@@ -100,10 +178,8 @@ body {
   --ra-border: rgba(255,255,255,0.12);
   --ra-text: #ffffff;
   --ra-muted: #c4c4c4;
-  --ra-accent: #ffffff; /* links/accents go white in mono */
+  --ra-accent: #ffffff;
   --ra-accent-strong: #ffffff;
   --ra-cta-bg: #ffffff;
   --ra-cta-text: #0B0B0B;
 }
-
-

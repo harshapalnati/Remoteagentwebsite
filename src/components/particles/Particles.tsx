@@ -58,7 +58,13 @@ export default function Particles({ className }: Props) {
     const ro = new ResizeObserver(onResize);
     ro.observe(canvas);
 
-    draw();
+    const prefersReduced = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+    if (prefersReduced) {
+      // draw once with static dots
+      for (let k = 0; k < 2; k++) draw();
+    } else {
+      draw();
+    }
     return () => {
       if (anim.current) cancelAnimationFrame(anim.current);
       ro.disconnect();

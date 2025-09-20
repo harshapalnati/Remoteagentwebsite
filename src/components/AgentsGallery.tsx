@@ -37,8 +37,8 @@ export default function AgentsGallery({ className }: { className?: string }) {
       <div className="ra-container py-16">
         <div className="text-center mb-10">
           <p className="text-[11px] tracking-[0.2em] text-[color:var(--ra-muted)] uppercase">[ Use Cases ]</p>
-          <h2 id="agents-heading" className="mt-3 ra-headline text-3xl sm:text-4xl">
-            Built for every type of deep agent
+          <h2 id="agents-heading" className="mt-3 ra-headline text-3xl sm:text-4xl capitalize">
+            Built for Every Type of Deep Agent
           </h2>
           <p className="mt-3 text-[color:var(--ra-muted)] max-w-2xl mx-auto">
             Pick a proven template, wire your stack, and keep governance and metrics consistent across all agents you deploy.
@@ -57,7 +57,7 @@ export default function AgentsGallery({ className }: { className?: string }) {
             return (
               <motion.li key={a.slug} variants={prefersReducedMotion ? undefined : item}>
                 <a
-                  href={`/agents/${a.slug}`}
+                  href="/contact"
                   className="group relative overflow-hidden block ra-card min-h-[240px] shadow-none transition-all duration-200 hover:-translate-y-[2px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--ra-accent)]/30 motion-reduce:transform-none motion-reduce:transition-none"
                 >
                   {/* Card-level radial glow */}
@@ -83,7 +83,7 @@ export default function AgentsGallery({ className }: { className?: string }) {
                   <span
                     className="mt-auto inline-flex items-center gap-1 border px-3 py-1.5 text-[12px] font-medium rounded-none"
                     style={{ borderColor: "var(--ra-border)" }}
-                    aria-label={`Learn more about ${a.title}`}
+                    aria-label={`Learn more about ${a.title} (contact us)`}
                   >
                     Learn more
                     <svg viewBox="0 0 20 20" className="h-3.5 w-3.5" fill="none" aria-hidden>

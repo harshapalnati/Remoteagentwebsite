@@ -17,8 +17,29 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "AI Sandboxes",
-  description: "Open-source, secure environment with real-world tools for enterprise-grade agents.",
+  title: {
+    default: "RemoteAgent — Build & Deploy Deep Agents",
+    template: "%s — RemoteAgent",
+  },
+  description: "Build and deploy production-ready deep agents fast — research, browse, code, and integrate with enterprise-grade guardrails.",
+  icons: {
+    icon: "/favicon.ico",
+    shortcut: "/favicon.ico",
+    apple: "/apple-touch-icon.png",
+  },
+  metadataBase: new URL("https://remoteagent.com"),
+  openGraph: {
+    title: "RemoteAgent — Build & Deploy Deep Agents",
+    description: "Production-ready deep agents. Research, code, browse, and integrate with enterprise-grade guardrails.",
+    url: "https://remoteagent.com",
+    siteName: "RemoteAgent",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "RemoteAgent — Build & Deploy Deep Agents",
+    description: "Production-ready deep agents. Research, code, browse, and integrate with enterprise-grade guardrails.",
+  },
 };
 
 export default function RootLayout({

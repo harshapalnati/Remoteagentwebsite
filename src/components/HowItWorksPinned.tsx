@@ -83,7 +83,7 @@ export default function HowItsWorkspinned() {
         gsap.set(cards, { opacity: 1, filter: "blur(0px)", x: 0 });
       }
 
-      const quickCometY = gsap.quickTo(cometEl, "y", { duration: 0.25, ease: "power1.out" });
+      const quickCometY = gsap.quickTo(cometEl, "y", { duration: 0.12, ease: "power1.out" });
 
       let tops: number[] = [];
       let firstTop = 0;
@@ -98,34 +98,56 @@ export default function HowItsWorkspinned() {
       const mm = gsap.matchMedia();
 
       mm.add("(min-width: 1024px)", () => {
+        // find the next section (sibling) to release pin when it reaches 70% viewport
+        const nextSection =
+          (section.closest("section")?.nextElementSibling as HTMLElement | null) ??
+          ((section.parentElement?.nextElementSibling as HTMLElement | null) as HTMLElement | null);
+
+        // helper: update highlight/comet by progress (0..1)
+        const updateByProgress = (p: number) => {
+          const pSteps = (cards.length - 1) * p;
+          const idx = Math.round(pSteps);
+          setActive(idx);
+
+          const base = Math.floor(pSteps);
+          const frac = pSteps - base;
+          const yA = tops[base] ?? firstTop;
+          const yB = tops[base + 1] ?? yA;
+          quickCometY(yA + (yB - yA) * frac);
+        };
+
         const st = ScrollTrigger.create({
           trigger: section,
           start: "top top",
-          end: () =>
-            "+=" +
-            Math.max(
-              1400,
-              (cards.length - 1) * Math.max(600, window.innerHeight * 0.9),
-              (wrapEl.scrollHeight - section.clientHeight) + window.innerHeight * 0.75
-            ),
-          scrub: 0.5,
+          ...(nextSection
+            ? { endTrigger: nextSection, end: "top 40%" }
+            : { end: "+=" + Math.max(700, (cards.length - 1) * Math.max(320, window.innerHeight * 0.42)) }),
           pin: true,
           pinSpacing: true,
+          scrub: 0.12,
           anticipatePin: 1,
           invalidateOnRefresh: true,
           onRefresh: () => recompute(),
-          onUpdate: (self) => {
-            const pSteps = (cards.length - 1) * self.progress;
-            const idx = Math.round(pSteps);
-            setActive(idx);
-            const base = Math.floor(pSteps);
-            const frac = pSteps - base;
-            const yA = tops[base] ?? firstTop;
-            const yB = tops[base + 1] ?? yA;
-            quickCometY(yA + (yB - yA) * frac);
+          onUpdate: (self) => updateByProgress(self.progress),
+          snap: (value) => {
+            const n = cards.length - 1;
+            return Math.round(value * n) / n;
           },
         });
-        return () => st.kill();
+
+        const onKey = (e: KeyboardEvent) => {
+          if (e.key !== "ArrowRight" && e.key !== "ArrowLeft") return;
+          const n = cards.length - 1;
+          const cur = Math.round(st.progress * n);
+          const next = Math.max(0, Math.min(n, cur + (e.key === "ArrowRight" ? 1 : -1)));
+          gsap.to(st, { progress: next / n, duration: 0.35, ease: "power2.out" });
+        };
+        window.addEventListener("keydown", onKey);
+
+        return () => {
+          window.removeEventListener("keydown", onKey);
+          st.kill();
+        };
       });
 
       mm.add("(max-width: 1023px)", () => {
