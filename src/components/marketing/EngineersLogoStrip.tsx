@@ -75,25 +75,59 @@ export default function EngineersLogoStrip({
 
           {/* Hairline frame via inset shadow; clip overlay to strip only */}
           <div className="relative overflow-hidden shadow-[inset_0_0_0_1.25px_rgba(255,255,255,0.10)] rounded-none bg-transparent">
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-0 divide-x-2 divide-white/15 rounded-none">
-            {logos.map((item, i) => (
-              <div key={item.name + i} className="p-10 flex items-center justify-center h-[120px] md:h-[140px] bg-transparent hover:bg-white/[0.02] transition">
-                <Image
-                  src={item.src}
-                  alt={item.name}
-                  width={item.width ?? 200}
-                  height={48}
-                  className={(/salesforce/i.test(item.name) ? "h-12 md:h-16" : "h-8 md:h-10") + " w-auto object-contain opacity-100"}
-                  loading="lazy"
-                />
+            {/* Mobile: horizontal carousel */}
+            <div className="sm:hidden overflow-hidden py-4">
+              <div className="ra-marquee">
+                <div className="ra-track">
+                  {[...logos, ...logos].map((item, i) => (
+                    <div key={item.name + i} className="flex items-center justify-center w-40 h-[100px] mx-2">
+                      <Image
+                        src={item.src}
+                        alt={item.name}
+                        width={item.width ?? 200}
+                        height={48}
+                        sizes="(max-width: 640px) 40vw, 200px"
+                        className={(/salesforce/i.test(item.name) ? "h-10" : "h-8") + " w-auto object-contain opacity-100"}
+                        loading="lazy"
+                      />
+                    </div>
+                  ))}
+                </div>
               </div>
-            ))}
+            </div>
+
+            {/* Tablet/Desktop grid */}
+            <div className="hidden sm:grid grid-cols-2 md:grid-cols-5 gap-0 divide-x-2 divide-white/15 rounded-none">
+              {logos.map((item, i) => (
+                <div key={item.name + i} className="p-10 flex items-center justify-center h-[120px] md:h-[140px] bg-transparent hover:bg-white/[0.02] transition">
+                  <Image
+                    src={item.src}
+                    alt={item.name}
+                    width={item.width ?? 200}
+                    height={48}
+                    className={(/salesforce/i.test(item.name) ? "h-12 md:h-16" : "h-8 md:h-10") + " w-auto object-contain opacity-100"}
+                    loading="lazy"
+                  />
+                </div>
+              ))}
             </div>
 
             {/* Removed explicit outer SVG border to avoid thick edge; inset hairline handles frame */}
           </div>
 
-          <style jsx>{``}</style>
+          <style jsx>{`
+            .ra-marquee { position: relative; }
+            .ra-track {
+              display: flex;
+              align-items: center;
+              width: max-content;
+              animation: ra_scroll 20s linear infinite;
+            }
+            @keyframes ra_scroll {
+              0% { transform: translateX(0); }
+              100% { transform: translateX(-50%); }
+            }
+          `}</style>
         </div>
       </div>
     </section>

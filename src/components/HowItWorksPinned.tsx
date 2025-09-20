@@ -75,8 +75,13 @@ export default function HowItsWorkspinned() {
         return { tops, firstTop };
       };
 
-      dimAll();
-      setActive(0);
+      // Desktop starts with Step 1 highlighted; on mobile, show all steps plainly
+      if (window.matchMedia("(min-width: 1024px)").matches) {
+        dimAll();
+        setActive(0);
+      } else {
+        gsap.set(cards, { opacity: 1, filter: "blur(0px)", x: 0 });
+      }
 
       const quickCometY = gsap.quickTo(cometEl, "y", { duration: 0.25, ease: "power1.out" });
 
@@ -124,14 +129,8 @@ export default function HowItsWorkspinned() {
       });
 
       mm.add("(max-width: 1023px)", () => {
-        gsap.from(cards, {
-          opacity: 0,
-          y: 20,
-          duration: 0.5,
-          stagger: 0.12,
-          ease: "power2.out",
-          scrollTrigger: { trigger: section, start: "top 80%", invalidateOnRefresh: true },
-        });
+        // No scroll effects on mobile; render statically and remove any blur/dim
+        gsap.set(cards, { opacity: 1, y: 0, filter: "blur(0px)", clearProps: "willChange" });
         return () => {
           ScrollTrigger.getAll().forEach((t) => t.vars.trigger === section && t.kill());
         };
@@ -154,17 +153,17 @@ export default function HowItsWorkspinned() {
 
   return (
     <section ref={rootRef} className="w-full border border-white/10 bg-transparent">
-      <div className="mx-auto max-w-6xl px-6 md:px-10 py-16 md:py-24">
-        <div className="grid lg:grid-cols-[42%_58%] gap-10 md:gap-16 items-start">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6 md:px-10 py-12 md:py-24">
+        <div className="grid lg:grid-cols-[42%_58%] gap-8 md:gap-16 items-start">
           {/* Left */}
           <div>
-            <div className="text-xs tracking-wider uppercase text-zinc-500">[ Deep agents, simplified ]</div>
-            <h2 className="mt-2 font-mono text-5xl md:text-6xl font-bold text-white leading-tight">
+            <div className="text-xs tracking-wider uppercase text-zinc-500 text-center lg:text-left">[ Deep agents, simplified ]</div>
+            <h2 className="mt-2 font-mono text-3xl sm:text-5xl md:text-6xl font-bold text-white leading-tight text-center lg:text-left">
               How<br className="hidden sm:block" /> RemoteAgent<br className="hidden sm:block" /> Works
             </h2>
 
-            <div className="mt-6">
-              <a href="/contact" className="ra-cta inline-flex items-center gap-2">
+            <div className="mt-4 sm:mt-6 text-center lg:text-left">
+              <a href="/contact" className="ra-cta inline-flex items-center gap-2 text-sm sm:text-base px-3 py-1.5 sm:px-4 sm:py-2">
                 Get Early Access
                 <svg className="h-3.5 w-3.5" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M13.172 12 8.222 7.05l1.414-1.414L16 12l-6.364 6.364-1.414-1.414z" />
@@ -176,17 +175,14 @@ export default function HowItsWorkspinned() {
           {/* Right */}
           <div ref={wrapRef} className="relative overflow-visible">
             {/* rail */}
-            <div ref={railRef} className="absolute left-0 top-0 ml-3 w-px bg-white/20" />
+            <div ref={railRef} className="hidden lg:block absolute left-0 top-0 ml-3 w-px bg-white/20" />
             {/* comet */}
-            <div
-              ref={cometRef}
-              className="absolute left-0 top-0 -translate-x-[5px] h-2.5 w-2.5 bg-white ring-1 ring-white/30 z-10"
-            />
+            <div ref={cometRef} className="hidden lg:block absolute left-0 top-0 -translate-x-[5px] h-2.5 w-2.5 bg-white ring-1 ring-white/30 z-10" />
             {/* steps */}
-            <div className="pl-8 space-y-16">
+            <div className="pl-0 lg:pl-8 space-y-10 sm:space-y-14 lg:space-y-16">
               {STEPS.map((s, i) => (
                 <div key={i} data-step-card className="will-change-transform">
-                  <h3 className="text-white text-xl md:text-2xl font-semibold">{s.title}</h3>
+                  <h3 className="text-white text-lg sm:text-xl md:text-2xl font-semibold">{s.title}</h3>
                   <p className="mt-2 text-zinc-400 max-w-2xl">{s.body}</p>
                 </div>
               ))}

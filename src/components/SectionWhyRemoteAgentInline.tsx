@@ -74,15 +74,15 @@ export default function SectionWhyRemoteAgentInline() {
     <section className="ra-section">
       <div className="ra-container">
         {/* stacked hero */}
-        <div className="max-w-3xl">
-          <h2 className="ra-headline">
+        <div className="max-w-3xl text-center md:text-left">
+          <h2 className="ra-headline text-3xl sm:text-5xl md:text-6xl">
             {headline}
           </h2>
-          <p className="mt-5 ra-subhead">{subhead}</p>
+          <p className="mt-4 md:mt-5 ra-subhead max-w-[40ch] md:max-w-none mx-auto md:mx-0">{subhead}</p>
         </div>
 
         {/* FLEX row that never wraps on md+ */}
-        <div className="mt-12 flex gap-6 flex-wrap md:flex-nowrap">
+        <div className="mt-10 md:mt-12 flex gap-4 md:gap-6 flex-wrap md:flex-nowrap justify-center md:justify-start">
           {keys.map((k) => {
             const { title, blurb, Icon } = CONTENT[k];
             const isActive = active === k;

@@ -13,6 +13,7 @@ function LogoRA({ className = "" }: { className?: string }) {
         alt="RemoteAgent logo"
         width={40}
         height={40}
+        sizes="40px"
         className="h-8 w-8 object-contain"
         priority={false}
       />

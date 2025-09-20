@@ -43,20 +43,20 @@ export default function TypingHeadline() {
   return (
     <div className="w-full text-center">
       {/* Line 1 */}
-      <div className="font-mono text-center text-4xl sm:text-5xl md:text-6xl font-bold tracking-normal uppercase">
+      <div className="font-mono text-center text-2xl sm:text-5xl md:text-6xl font-bold tracking-normal uppercase leading-tight break-words mx-auto max-w-[26ch]">
         BUILD &amp; DEPLOY
       </div>
 
       {/* Line 2: typing effect with cursor */}
-      <div className="mt-2 flex items-center justify-center">
-        <span className="font-mono text-center text-4xl sm:text-5xl md:text-6xl font-bold tracking-normal">
+      <div className="mt-2 flex items-center justify-center min-h-[1.6em]">
+        <span className="font-mono text-center text-2xl sm:text-5xl md:text-6xl font-bold tracking-normal leading-tight break-words mx-auto max-w-[26ch]">
           {displayed}
         </span>
-        <span className="ml-2 h-[1.2em] w-[2px] bg-white/90 animate-pulse" />
+        <span className="ml-2 h-[1.2em] w-[2px] bg-white/90 animate-pulse hidden sm:inline-block" />
       </div>
 
       {/* Line 3 */}
-      <div className="mt-2 font-mono text-center text-4xl sm:text-5xl md:text-6xl font-bold tracking-normal uppercase">
+      <div className="mt-2 font-mono text-center text-2xl sm:text-5xl md:text-6xl font-bold tracking-normal uppercase leading-tight break-words mx-auto max-w-[26ch]">
         IN&nbsp;HOURS,&nbsp;NOT&nbsp;WEEKS
       </div>
     </div>
