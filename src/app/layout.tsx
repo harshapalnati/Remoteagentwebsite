@@ -23,8 +23,11 @@ export const metadata: Metadata = {
   },
   description: "Build and deploy production-ready deep agents fast — research, browse, code, and integrate with enterprise-grade guardrails.",
   icons: {
-    icon: "/favicon.ico",
-    shortcut: "/favicon.ico",
+    icon: [
+      { url: "/favicon.ico", type: "image/x-icon" },
+      { url: "/apple-touch-icon.png", type: "image/png" },
+    ],
+    shortcut: "/apple-touch-icon.png",
     apple: "/apple-touch-icon.png",
   },
   metadataBase: new URL("https://remoteagent.com"),
