@@ -24,3 +24,28 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* RemoteAgent system UI tokens */
+:root{
+  --ra-bg: #0B0B0D;
+  --ra-card:#0E0F12;
+  --ra-stroke:#1A1B20;
+  --ra-soft:#111216;
+  --ra-text:#EDEEF1;
+  --ra-muted:rgba(237,238,241,0.7);
+  --ra-ink:rgba(237,238,241,0.45);
+  --ra-accent-1:#FF8A3C;
+  --ra-accent-2:#2E6BFF;
+  --ra-ring:rgba(255,138,60,0.25);
+}
+
+html { background: var(--ra-bg); }
+
+.bg-noise{
+  background:
+    radial-gradient(1200px 600px at 80% 20%, rgba(46,107,255,0.05), transparent 60%),
+    radial-gradient(800px 400px at 15% 40%, rgba(255,138,60,0.06), transparent 60%),
+    repeating-radial-gradient( circle at 50% 50%, rgba(255,255,255,0.03) 0 0.5px, transparent 0 6px);
+}
+
+.shadow-panel{ box-shadow: 0 0 0 1px var(--ra-stroke) inset, 0 10px 40px rgba(0,0,0,0.45); }

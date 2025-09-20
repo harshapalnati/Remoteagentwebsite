@@ -1,0 +1,53 @@
+.hiw-bg { position: absolute; inset: 0; pointer-events: none; z-index: 0;
+  background:
+    radial-gradient(600px 400px at 20% 10%, rgba(255,255,255,.06), transparent 60%),
+    radial-gradient(600px 400px at 80% 90%, rgba(255,77,61,.10), transparent 65%),
+    linear-gradient(0deg, rgba(255,255,255,.02), rgba(255,255,255,.02)),
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='6' height='6'><rect width='1' height='1' fill='rgba(255,255,255,.05)'/></svg>") repeat;
+  mix-blend-mode: normal;
+}
+.hiw-noise::after{ content:""; position:absolute; inset:0; pointer-events:none; opacity:.08;
+  background:url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQIW2P8z8DwnwAIGwMFBQqX3wAAAABJRU5ErkJggg==') repeat; }
+
+/* Theme tokens */
+:root{
+  --bg:#0b0b0c; --text:#E6E8EC; --muted:#9AA0A6;
+  --card:rgba(255,255,255,.05); --cardBorder:rgba(255,255,255,.10);
+  --hairline:rgba(255,255,255,.06); --accent:#ff4d3d;
+}
+
+.hiw{ position:relative; background:var(--bg); color:var(--text); }
+
+/* Card primitives */
+.hiw-card{ position:relative; border-radius:16px; background:var(--card);
+  border:1px solid var(--cardBorder); backdrop-filter:saturate(120%) blur(6px);
+  transition:transform .35s cubic-bezier(.2,.7,.2,1), background-color .25s ease;
+  will-change:transform;
+}
+.hiw-card::after{ content:""; position:absolute; inset:0; border-radius:inherit;
+  box-shadow: inset 0 0 0 1px var(--hairline); pointer-events:none;
+}
+.hiw-card:hover{ transform:translateY(-2px) scale(1.01); background:rgba(255,255,255,.09);
+  box-shadow:0 12px 40px -18px rgba(0,0,0,.5);
+}
+
+/* Halo for active card */
+.hiw-halo{ position:absolute; inset:-2px; border-radius:16px; pointer-events:none;
+  background: radial-gradient(60% 80% at 50% 0%, rgba(255,77,61,.15) 0%, rgba(255,77,61,0) 60%);
+  opacity:.35; z-index:0;
+}
+
+/* Timeline spine & nodes */
+.hiw-spine{ position:absolute; left:6px; top:0; bottom:0; width:1px; background:var(--hairline); }
+.hiw-node{ position:absolute; left:3px; width:6px; height:6px; border-radius:9999px; background:var(--hairline); }
+.hiw-node.is-active{ background:var(--accent); box-shadow:0 0 0 2px rgba(255,77,61,.2); }
+
+/* Subtle float for illustration */
+@keyframes hiw_float{ 0%,100%{ transform:translateY(0)} 50%{ transform:translateY(4px)} }
+.hiw-float{ animation:hiw_float 8s ease-in-out infinite; }
+
+/* Parallax target wrapper */
+.hiw-parallax{ transition: transform .35s cubic-bezier(.2,.7,.2,1); will-change:transform; }
+
+
+
