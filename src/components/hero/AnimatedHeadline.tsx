@@ -41,16 +41,11 @@ export default function AnimatedHeadline() {
               animate={reduceMotion ? {} : { y: 0, opacity: 1 }}
               exit={reduceMotion ? {} : { y: -22, opacity: 0 }}
               transition={{ duration: 0.35, ease: "easeOut" }}
-              className="relative z-40 inline-flex gap-2" /* above local ::before bars */
+              className="relative z-40 inline-block"
             >
-              {(current || "").split(" ").map((token, idx) => (
-                <span
-                  key={idx}
-                  className="px-2.5 py-0.5 sm:py-1 bg-white text-black text-2xl sm:text-4xl md:text-5xl font-bold leading-none"
-                >
-                  {token}
-                </span>
-              ))}
+              <span className="px-2.5 py-0.5 sm:py-1 bg-white text-black text-2xl sm:text-4xl md:text-5xl font-extrabold font-mono uppercase tracking-tight leading-none whitespace-pre">
+                {(current || "").replace(/\s+/g, " ")}
+              </span>
             </motion.div>
           </AnimatePresence>
         </div>
